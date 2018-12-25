@@ -1,25 +1,12 @@
-# README
+# Tools used: # 
+Backend | Rails 
+Front end | React
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+---- 
 
-Things you may want to cover:
+# Details on Tools used #
 
-* Ruby version
+## Ruby on Rails ## 
+- Curl: `curl -G http://localhost:3001/api/v1/ideas`
 
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
-# rails-app
+## React ##
