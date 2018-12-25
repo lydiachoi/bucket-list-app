@@ -31,5 +31,14 @@ module IdeaboardApi
     # Middleware like session, flash, cookies can be added back manually.
     # Skip views, helpers and assets when generating a new resource.
     config.api_only = true
+
+    # added to restrict origins to our front-end app 
+    # and allow access tot he standard REST API endpoint methods for all resources
+    config.middleware.insert_before 0, Rack::Cors do
+      allow do
+        origins 'http://localhost:3000'  # restricted from '*' everything to just port 3001s
+        resource '*', :headers => :any, :methods => [:get, :post, :put, :delete, :options]
+      end
+    end
   end
 end
