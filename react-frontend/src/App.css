@@ -1,5 +1,6 @@
 .App {
-  text-align: center;
+  text-align: left;
+  background-color: #e6ddca;
 }
 
 .App-header {
@@ -10,4 +11,15 @@
 
 .App-intro {
   font-size: large;
+}
+
+.tile {
+  height: 150px;
+  width: 150px;
+  margin: 10px;
+  background: #819d97;
+  float: left;
+  font-size: 11px;
+  text-align: center;
+  color: #FFF;
 }
