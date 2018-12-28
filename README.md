@@ -1,22 +1,23 @@
-# Tools used: # 
-Backend | Rails 
-Front end | React
-
----- 
-
 # Details on Tools used #
 
-## Ruby on Rails ## 
+## Back-end: Ruby on Rails ## 
 - Rails API server on port 3001:
 - Curl: `curl -G http://localhost:3001/api/v1/ideas`
 
-## React ##
+## Front-end: React ##
 - Listening to Port 3000
 - The following methods are called in the following order when an instance of a component is being created and inserted into the DOM:
   1. constructor()
   2. static getDerivedStateFromProps()
   3. render()
   4. componentDidMount()
+
+### Tracking state changes in React Developer Tools ###
+- Allows you to see state changes in action with the React Developer Tools Browser Extension directly as user types. 
+- Install extension > refresh the app page > open developer console > should see new `React` tab
+- In the tab, you'll be able to see components tree on the left and all the props and state associated with each component on the right.
+- [For chrome](https://chrome.google.com/webstore/detail/react-developer-tools/fmkadmapgofadopljbjfkapdkoienihi), [For firefox](https://addons.mozilla.org/en-US/firefox/addon/react-devtools/)
+
 
 ## Axios ##
 - JavaScript Library used to perform promise-based HTTP client for the browser and node.js
@@ -32,7 +33,13 @@ Front end | React
 
 ---- 
 
-## Programming Specific Notes ## 
+# Programming Specific Notes #
+
+### JavaScript Notes ### 
+- How to add In-line editing on forms 
+- - utilize `onClick` and `onBlur` to respectively set state values (`onClick`) each time a form field is completed, and then save the state with `onBlur event` when user clicks out of the form.
+- - - `onBlur` event - triggered when a user leaves an input field, or when an object loses focus - most often used for form validation code 
+- - - `onClick` event - triggered when a button is clicked, when the user clicks on an element.
 
 ### Enabling Cross Origin Resource Sharing (CORS) ###
 -  “No Access-Control-Allow-Origin header present” error triggered because the API is on a different port, must enable Cross Origin Resource Sharing (CORS) to ensure both ports "talk to each other".
@@ -53,3 +60,6 @@ Front end | React
 ### Rails Notes: ###
 - When creating `post` endpoint, we need to allow the endpoint to take in specific requirements (to post idea data and create new ideas)
   - Since Rails uses strong parameters, we define the private method idea_params to whitelist the params we need — title and body.
+
+
+Credits to [Hrishi Mittal's SitePoint Tutorial](https://www.sitepoint.com/react-rails-5-1/)

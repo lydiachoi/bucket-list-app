@@ -5,18 +5,51 @@ class IdeaForm extends Component {
   constructor(props) {
     super(props)
     this.state = {
+      title: this.props.idea.title,
+      body: this.props.idea.body,
     }
   }
 
-  // renders a form
+  handleInput = (e) => {
+    this.setState({[e.target.name]: e.target.value})
+  }
+
+  handleBlur = () => {
+    const editedIdea = {
+      title: this.state.title,
+      body: this.state.body
+    }
+
+    axios.put(
+      `http://localhost:3001/api/v1/ideas/${this.props.idea.id}`,
+      {
+        idea: editedIdea, 
+      }).then( response => {
+        console.log("PUT response: ");
+        console.log(response);
+        // after saving the response to API,
+        // must update IdeasContainer so it knows that the ideas have been updated
+        this.props.updateIdea(response.data);
+      }).catch( error => {
+        console.log(error); 
+      }
+    )
+  }
+
+  // Renders the input form
+  // onChange = handleInput --> sets the form field values to specific state values
+  // onBlur   = when the form loses focus, save the form. 
   render() {
     return (
       <div className="tile">
-        <form>
+        <form onBlur={this.handleBlur}>
           <input className='input' type="text"
-            name="title" placeholder='Enter a Title' />
+            name="title" placeholder='Enter a Title'
+            value={this.state.title} onChange={this.handleInput} />
           <textarea className='input' name="body"
-            placeholder='Describe your idea'></textarea>
+            placeholder='Describe your idea' value={this.state.body}
+            onChange={this.handleInput}>
+          </textarea>
         </form>
       </div>
     );

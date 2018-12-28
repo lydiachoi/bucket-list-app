@@ -49,6 +49,15 @@ class IdeasContainer extends Component {
     })
   }
 
+  // this gets called by ideaForm when the onBlurring happens and API is updated
+  updateIdea = (editedIdea) => {
+    const ideaIndex = this.state.ideas.findIndex(x => x.id === editedIdea.id)
+    const setOfUpdatedIdeas = update(this.state.ideas, {
+      [ideaIndex]: { $set: editedIdea }
+    })
+    this.setState({ideas: setOfUpdatedIdeas})
+  }
+
 // maps each idea to either the idea form or the idea, depending on the id
   render() {
     return (
@@ -59,7 +68,8 @@ class IdeasContainer extends Component {
         <div>
           {this.state.ideas.map((idea) => { 
             if (this.state.editingIdeaId === idea.id) {
-              return ( <IdeaForm idea={idea} key={idea.id} /> )
+              return ( <IdeaForm idea={idea} key={idea.id} 
+                        updateIdea={this.updateIdea} /> )
             } else {
               return ( <Idea idea={idea} key={idea.id} /> )
             }
