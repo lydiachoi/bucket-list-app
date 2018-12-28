@@ -40,6 +40,11 @@
 - - utilize `onClick` and `onBlur` to respectively set state values (`onClick`) each time a form field is completed, and then save the state with `onBlur event` when user clicks out of the form.
 - - - `onBlur` event - triggered when a user leaves an input field, or when an object loses focus - most often used for form validation code 
 - - - `onClick` event - triggered when a button is clicked, when the user clicks on an element.
+- Set cursor focus to a specific field when a tile is clicked
+- - add a [`ref`](https://reactjs.org/docs/refs-and-the-dom.html) - `ref={this.props.titleRef}` to IdeaForm
+- - then pass the ref as a prop to use in the parent component (in this case `IdeasComponent`) - using `titleRef= {input => this.title = input}`
+
+
 
 ### Enabling Cross Origin Resource Sharing (CORS) ###
 -  “No Access-Control-Allow-Origin header present” error triggered because the API is on a different port, must enable Cross Origin Resource Sharing (CORS) to ensure both ports "talk to each other".

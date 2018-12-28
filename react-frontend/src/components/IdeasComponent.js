@@ -66,6 +66,16 @@ class IdeasComponent extends Component {
     this.setState({notification: ""})
   }
 
+  // passed title.focus to setState inside a callback as a second argument
+  // because setState doesn't always update the component
+  // by passing focus call in a callback - ensure that it's only called after the component has been updated. 
+  enableEditing = (id) => {
+    this.setState(
+      { editingIdeaId: id },
+      () => { this.title.focus()}
+    );
+  }
+
   // maps each idea to either the idea form or the idea, depending on the id
   render() {
     return (
@@ -81,9 +91,11 @@ class IdeasComponent extends Component {
             if (this.state.editingIdeaId === idea.id) {
               return ( <IdeaForm idea={idea} key={idea.id} 
                         updateIdea={this.updateIdea}
+                        titleRef= {input => this.title = input}
                         resetNotification={this.resetNotification} /> )
             } else {
-              return ( <Idea idea={idea} key={idea.id} /> )
+              return ( <Idea idea={idea} key={idea.id} 
+                            onClick={this.enableEditing}/> )
             }
           })}
         </div>
