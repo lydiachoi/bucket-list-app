@@ -27,7 +27,7 @@ class IdeasComponent extends Component {
 
   addNewIdea = () => {
     axios.post(
-      "http://localhost:3001/api/v1/ideas",
+      `http://localhost:3001/api/v1/ideas`,
       { idea:
         { 
           title: "", 
@@ -50,52 +50,54 @@ class IdeasComponent extends Component {
     })
   }
 
-  // this gets called by ideaForm when the onBlurring happens and API is updated
-  updateIdea = (editedIdea) => {
-    const ideaIndex = this.state.ideas.findIndex(x => x.id === editedIdea.id)
-    const setOfUpdatedIdeas = update(this.state.ideas, {
-      [ideaIndex]: { $set: editedIdea }
+  deleteIdea = (id) => {
+    axios.delete(`http://localhost:3001/api/v1/ideas/${id}`)
+    .then(response => {
+      const ideaIndex = this.state.ideas.findIndex(x => x.id === id)
+      const ideas = update(this.state.ideas, { $splice: [[ideaIndex, 1]]})
+      this.setState({ideas: ideas})
     })
-    this.setState({
-      ideas: setOfUpdatedIdeas,
-      notification: "All changes saved"
-    })
+    .catch(error => console.log(error))
   }
 
-  resetNotification = () => {
-    this.setState({notification: ""})
+  // this gets called by ideaForm when the onBlurring happens and API is updated
+  updateIdea = (idea) => {
+    const ideaIndex = this.state.ideas.findIndex(x => x.id === idea.id)
+    const ideas = update(this.state.ideas, {
+      [ideaIndex]: { $set: idea }
+    })
+    this.setState({
+      ideas: ideas,
+      notification: "All changes saved"
+      });
   }
+
+  resetNotification = () => { this.setState({notification: ""})  }
 
   // passed title.focus to setState inside a callback as a second argument
   // because setState doesn't always update the component
   // by passing focus call in a callback - ensure that it's only called after the component has been updated. 
   enableEditing = (id) => {
-    this.setState(
-      { editingIdeaId: id },
-      () => { this.title.focus()}
-    );
+    this.setState({editingIdeaId: id}, () => { this.title.focus() })
   }
 
   // maps each idea to either the idea form or the idea, depending on the id
   render() {
     return (
       <div>
-        <button className="newIdeaButton" onClick={this.addNewIdea}>
-          New Idea
-        </button>
-        <span className="notification" > 
-          { this.state.notification }
-        </span>
+        <button className="newIdeaButton" onClick={this.addNewIdea}> New Idea </button>
+        <span className="notification" > { this.state.notification } </span>
         <div>
-          {this.state.ideas.map((idea) => { 
-            if (this.state.editingIdeaId === idea.id) {
-              return ( <IdeaForm idea={idea} key={idea.id} 
+          {this.state.ideas.map((idea) => {
+            if(this.state.editingIdeaId === idea.id) {
+              return(<IdeaForm idea={idea} key={idea.id}
                         updateIdea={this.updateIdea}
                         titleRef= {input => this.title = input}
-                        resetNotification={this.resetNotification} /> )
+                        resetNotification={this.resetNotification} />)
             } else {
-              return ( <Idea idea={idea} key={idea.id} 
-                            onClick={this.enableEditing}/> )
+              return (<Idea idea={idea} key={idea.id} 
+                        onClick={this.enableEditing}
+                        onDelete={this.deleteIdea} />)
             }
           })}
         </div>

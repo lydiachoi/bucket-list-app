@@ -15,11 +15,23 @@ module Api::V1
 
     # for updating an idea
     def update
-    @idea = Idea.find(params[:id])
-    @idea.update_attributes(idea_params)
-    render json: @idea
+      @idea = Idea.find(params[:id])
+      @idea.update_attributes(idea_params)
+      render json: @idea
     end
     
+    # for deleting an idea
+    # if idea.destroy works, then status is ok and no content in head
+    # otherwise status = unprocessable_entity and render error
+    def destroy
+      @idea = Idea.find(params[:id])
+      if @idea.destroy 
+        head :no_content, status: :ok
+      else
+        render json: @idea.errors, status: :unprocessable_entity
+      end
+    end 
+
     private 
 
     def idea_params
