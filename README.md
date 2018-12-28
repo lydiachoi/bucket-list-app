@@ -1,3 +1,7 @@
+## Bucket List React/Ruby on Rails Application with basic CRUD functionality ##
+
+![Final Image](images/finalpicture.png "Sampe Final Image of Application")
+
 # Details on Tools used #
 
 ## Back-end: Ruby on Rails ## 
