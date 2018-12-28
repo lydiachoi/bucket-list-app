@@ -4,12 +4,13 @@ import Idea from './Idea';
 import IdeaForm from "./IdeaForm";
 import update from 'immutability-helper';
 
-class IdeasContainer extends Component {
+class IdeasComponent extends Component {
   constructor(props) {
     super(props);
     this.state = {
       ideas: [],           // by default there's no ideas in the array (until addNewIdea())
       editingIdeaId: null, // by default we aren't editing any idea
+      notification: "", 
     }
   }
 
@@ -55,21 +56,32 @@ class IdeasContainer extends Component {
     const setOfUpdatedIdeas = update(this.state.ideas, {
       [ideaIndex]: { $set: editedIdea }
     })
-    this.setState({ideas: setOfUpdatedIdeas})
+    this.setState({
+      ideas: setOfUpdatedIdeas,
+      notification: "All changes saved"
+    })
   }
 
-// maps each idea to either the idea form or the idea, depending on the id
+  resetNotification = () => {
+    this.setState({notification: ""})
+  }
+
+  // maps each idea to either the idea form or the idea, depending on the id
   render() {
     return (
       <div>
         <button className="newIdeaButton" onClick={this.addNewIdea}>
           New Idea
         </button>
+        <span className="notification" > 
+          { this.state.notification }
+        </span>
         <div>
           {this.state.ideas.map((idea) => { 
             if (this.state.editingIdeaId === idea.id) {
               return ( <IdeaForm idea={idea} key={idea.id} 
-                        updateIdea={this.updateIdea} /> )
+                        updateIdea={this.updateIdea}
+                        resetNotification={this.resetNotification} /> )
             } else {
               return ( <Idea idea={idea} key={idea.id} /> )
             }
@@ -80,4 +92,4 @@ class IdeasContainer extends Component {
   }
 }
 
-export default IdeasContainer;
+export default IdeasComponent;

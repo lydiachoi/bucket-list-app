@@ -11,7 +11,8 @@ class IdeaForm extends Component {
   }
 
   handleInput = (e) => {
-    this.setState({[e.target.name]: e.target.value})
+    this.props.resetNotification();
+    this.setState({ [e.target.name]: e.target.value });
   }
 
   handleBlur = () => {
@@ -28,7 +29,7 @@ class IdeaForm extends Component {
         console.log("PUT response: ");
         console.log(response);
         // after saving the response to API,
-        // must update IdeasContainer so it knows that the ideas have been updated
+        // must update IdeasComponent so it knows that the ideas have been updated
         this.props.updateIdea(response.data);
       }).catch( error => {
         console.log(error); 
