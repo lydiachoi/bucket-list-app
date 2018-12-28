@@ -44,7 +44,6 @@ class IdeasContainer extends Component {
         ideas: splicedIdeas,
         editingIdeaId: response.data.id, // sets the response id to the value of state.editingIdeaId
       });
-      console.log("data id " + response.data.id);
     }).catch( function(error) {
       console.log(error); 
     })
@@ -59,12 +58,9 @@ class IdeasContainer extends Component {
         </button>
         <div>
           {this.state.ideas.map((idea) => { 
-            console.log(this.state.editingIdeaId + " " + idea.id);
             if (this.state.editingIdeaId === idea.id) {
-              console.log("gets here");
               return ( <IdeaForm idea={idea} key={idea.id} /> )
             } else {
-              console.log("only gets here");
               return ( <Idea idea={idea} key={idea.id} /> )
             }
           })}
