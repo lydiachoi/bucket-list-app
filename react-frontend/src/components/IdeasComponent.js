@@ -8,7 +8,8 @@ class IdeasContainer extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      ideas: []
+      ideas: [],           // by default there's no ideas in the array (until addNewIdea())
+      editingIdeaId: null, // by default we aren't editing any idea
     }
   }
 
@@ -32,31 +33,42 @@ class IdeasContainer extends Component {
           body: "", 
         }
       }
-    ).then( (response) => {
+    ).then( response => {
       console.log(response);
       // insert our new idea at the beginning of the array of ideas
       const splicedIdeas = update( this.state.ideas, {
         $splice: [[0, 0, response.data]]
       });
-      this.setState({ideas: splicedIdeas})
+      // sets state to new ideas list with added idea and we want to edit it immediately 
+      this.setState({
+        ideas: splicedIdeas,
+        editingIdeaId: response.data.id, // sets the response id to the value of state.editingIdeaId
+      });
+      console.log("data id " + response.data.id);
     }).catch( function(error) {
       console.log(error); 
     })
   }
 
-
+// maps each idea to either the idea form or the idea, depending on the id
   render() {
     return (
       <div>
         <button className="newIdeaButton" onClick={this.addNewIdea}>
           New Idea
         </button>
-        {this.state.ideas.map((idea) => { 
-        if (this.state.editIdeaID === idea.id) {
-          return ( <IdeaForm idea={idea} key={idea.id} /> )
-        }
-        return ( <Idea idea={idea} key={idea.id} /> )
-        })}
+        <div>
+          {this.state.ideas.map((idea) => { 
+            console.log(this.state.editingIdeaId + " " + idea.id);
+            if (this.state.editingIdeaId === idea.id) {
+              console.log("gets here");
+              return ( <IdeaForm idea={idea} key={idea.id} /> )
+            } else {
+              console.log("only gets here");
+              return ( <Idea idea={idea} key={idea.id} /> )
+            }
+          })}
+        </div>
       </div>
     );
   }

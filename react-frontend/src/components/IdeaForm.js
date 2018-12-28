@@ -1,5 +1,5 @@
-import React, { Component } from 'react'
-import axios from 'axios'
+import React, { Component } from 'react';
+import axios from 'axios';
 
 class IdeaForm extends Component {
   constructor(props) {
@@ -8,6 +8,7 @@ class IdeaForm extends Component {
     }
   }
 
+  // renders a form
   render() {
     return (
       <div className="tile">
@@ -22,4 +23,4 @@ class IdeaForm extends Component {
   }
 }
 
-export default IdeaForm
+export default IdeaForm;

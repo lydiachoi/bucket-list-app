@@ -6,4 +6,4 @@ const Idea = ({idea}) =>
     <p>{idea.body}</p>
   </div>
 
-  export default Idea; 
+export default Idea; 
